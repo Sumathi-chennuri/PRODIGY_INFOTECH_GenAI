@@ -1,0 +1,160 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPLasOVyyPCfmPUx2WdmSLo",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Sumathi-chennuri/PRODIGY_INFOTECH_GenAI/blob/main/Task_3\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "9-hoLlelzlSH",
+        "outputId": "8f63cbf4-dad8-4cec-df3f-611cd747ba3c"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: numpy in /usr/local/lib/python3.11/dist-packages (1.26.4)\n"
+          ]
+        }
+      ],
+      "source": [
+        "!pip install numpy"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "import random\n",
+        "from collections import defaultdict, Counter"
+      ],
+      "metadata": {
+        "id": "W2ZTdDUzz3JH"
+      },
+      "execution_count": 2,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def preprocess_text(text):\n",
+        "    # Convert text to lower case\n",
+        "    text = text.lower()\n",
+        "    # Tokenize\n",
+        "    words = text.split()\n",
+        "    return words\n",
+        "\n",
+        "# Example text\n",
+        "text_data = \"Your example text data goes here. You can use any large text corpus.\"\n",
+        "\n",
+        "# Preprocess\n",
+        "words = preprocess_text(text_data)\n"
+      ],
+      "metadata": {
+        "id": "oJrF2q2Yz6AW"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def build_markov_chain(words):\n",
+        "    markov_chain = defaultdict(Counter)\n",
+        "\n",
+        "    for i in range(len(words) - 1):\n",
+        "        current_word = words[i]\n",
+        "        next_word = words[i + 1]\n",
+        "        markov_chain[current_word][next_word] += 1\n",
+        "\n",
+        "    return markov_chain\n",
+        "\n",
+        "#Markov chain\n",
+        "markov_chain = build_markov_chain(words)"
+      ],
+      "metadata": {
+        "id": "b4EtgILcz8rN"
+      },
+      "execution_count": 4,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def generate_text(chain, start_word, num_words=50):\n",
+        "    current_word = start_word\n",
+        "    text = [current_word]\n",
+        "\n",
+        "    for _ in range(num_words - 1):\n",
+        "        next_words = list(chain[current_word].elements())\n",
+        "        if next_words:\n",
+        "            current_word = random.choice(next_words)\n",
+        "            text.append(current_word)\n",
+        "        else:\n",
+        "            break\n",
+        "\n",
+        "    return ' '.join(text)\n",
+        "\n",
+        "# Generate text\n",
+        "start_word = \"your\"\n",
+        "generated_text = generate_text(markov_chain, start_word)\n",
+        "print(generated_text)\n",
+        "\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Cxfyiqt6z-2Q",
+        "outputId": "eefc875a-f719-47ac-bf4b-c2bd831d4999"
+      },
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "your example text corpus.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "-HSFwdOY6iXE"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
