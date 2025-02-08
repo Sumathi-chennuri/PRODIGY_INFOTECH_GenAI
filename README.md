@@ -10,7 +10,7 @@ TASK-2
 
 Image Generation with Pre-trained Models
 
-tilize pre-trained generative models like DALL-E-mini or Stable Diffusion to create images from text prompts.
+Utilize pre-trained generative models like DALL-E-mini or Stable Diffusion to create images from text prompts.
 
 TASK-3
 
